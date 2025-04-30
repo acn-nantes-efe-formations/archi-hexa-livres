@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LivrePort {
-    List<Livre> findAll();
+    List<Livre> recupererTousLesLivres();
 
-    Optional<Livre> findById(int id);
+    Optional<Livre> recupererLivreParId(int id);
 
-    Livre ajouter(Livre livre);
+    Livre enregistrerNouveauLivre(Livre livre);
 
-    Livre modifier(Livre livre);
+    Livre mettreAJourLivre(Livre livre);
 
-    void supprimer(int id);
+    void supprimerLivreParId(int id);
 
-    boolean existe(int id);
+    boolean existeLivreParId(int id);
 }

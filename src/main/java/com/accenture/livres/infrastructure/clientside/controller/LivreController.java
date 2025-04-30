@@ -24,7 +24,7 @@ public class LivreController {
 
     @GetMapping
     public ResponseEntity<List<LivreResponseDto>> getAll() {
-        List<LivreResponseDto> liste = livreUseCase.livres()
+        List<LivreResponseDto> liste = livreUseCase.consulterLivres()
                 .stream()
                 .map(livreDtoMapper::livreToDtoResponse).toList();
         return ResponseEntity.ok(liste);
@@ -32,26 +32,26 @@ public class LivreController {
 
     @GetMapping("/{id}")
     public ResponseEntity<LivreResponseDto> getById(@PathVariable int id) {
-        Livre livre = livreUseCase.trouver(id);
+        Livre livre = livreUseCase.consulterLivre(id);
         return ResponseEntity.ok(livreDtoMapper.livreToDtoResponse(livre));
     }
 
     @PostMapping
     public ResponseEntity<LivreResponseDto> create(@RequestBody LivreRequestDto livreRequestDto) {
-        Livre livre = livreUseCase.ajouter(livreDtoMapper.requestDtoToLivre(livreRequestDto));
+        Livre livre = livreUseCase.ajouterLivre(livreDtoMapper.requestDtoToLivre(livreRequestDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(livreDtoMapper.livreToDtoResponse(livre));
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<LivreResponseDto> update(@PathVariable int id, @RequestBody LivreRequestDto livreRequestDto) {
         Livre livre = livreDtoMapper.requestDtoToLivre(livreRequestDto);
-        Livre livreModifie = livreUseCase.modifier(id, livre);
+        Livre livreModifie = livreUseCase.modifierLivre(id, livre);
         return ResponseEntity.ok(livreDtoMapper.livreToDtoResponse(livreModifie));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
-        livreUseCase.supprimer(id);
+        livreUseCase.supprimerLivre(id);
         return ResponseEntity.noContent().build();
     }
 }

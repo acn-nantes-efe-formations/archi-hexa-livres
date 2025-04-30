@@ -5,13 +5,13 @@ import com.accenture.livres.application.domain.Livre;
 import java.util.List;
 
 public interface LivreUseCase {
-    List<Livre> livres();
+    List<Livre> consulterLivres();
 
-    Livre trouver(int id);
+    Livre consulterLivre(int id);
 
-    Livre ajouter(Livre livre);
+    Livre ajouterLivre(Livre livre);
 
-    Livre modifier(int id, Livre livre);
+    Livre modifierLivre(int id, Livre livre);
 
-    void supprimer(int id);
+    void supprimerLivre(int id);
 }

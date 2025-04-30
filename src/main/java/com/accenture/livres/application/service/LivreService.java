@@ -19,38 +19,38 @@ public class LivreService implements LivreUseCase {
 
 
     @Override
-    public List<Livre> livres() {
-        return livrePort.findAll();
+    public List<Livre> consulterLivres() {
+        return livrePort.recupererTousLesLivres();
     }
 
     @Override
-    public Livre trouver(int id){
+    public Livre consulterLivre(int id){
         return livrePort
-                .findById(id)
+                .recupererLivreParId(id)
                 .orElseThrow(() -> new LivreIntrouvableException("Livre introuvable avec l'id " + id));
     }
 
     @Override
-    public Livre ajouter(Livre livre){
+    public Livre ajouterLivre(Livre livre){
         verifierLivre(livre);
-        return livrePort.ajouter(livre);
+        return livrePort.enregistrerNouveauLivre(livre);
     }
 
     @Override
-    public Livre modifier(int id, Livre livre){
-        Livre livreEnBase = trouver(id);
+    public Livre modifierLivre(int id, Livre livre){
+        Livre livreEnBase = consulterLivre(id);
         modifier(livre, livreEnBase);
 
-        return livrePort.modifier(livreEnBase);
+        return livrePort.mettreAJourLivre(livreEnBase);
     }
 
     @Override
-    public void supprimer(int id){
-        boolean trouve = livrePort.existe(id);
+    public void supprimerLivre(int id){
+        boolean trouve = livrePort.existeLivreParId(id);
         if (!trouve) {
             throw new LivreIntrouvableException("Livre introuvable avec l'id " + id);
         }
-        livrePort.supprimer(id);
+        livrePort.supprimerLivreParId(id);
     }
 
 

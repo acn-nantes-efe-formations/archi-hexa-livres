@@ -22,7 +22,7 @@ public class LivreAdapter implements LivrePort {
     }
 
     @Override
-    public List<Livre> findAll() {
+    public List<Livre> recupererTousLesLivres() {
         return livreRepository.findAll()
                 .stream()
                 .map(livreEntityMapper::entityToLivre)
@@ -30,33 +30,33 @@ public class LivreAdapter implements LivrePort {
     }
 
     @Override
-    public Optional<Livre> findById(int id) {
+    public Optional<Livre> recupererLivreParId(int id) {
         return livreRepository
                 .findById(id)
                 .map(livreEntityMapper::entityToLivre);
     }
 
     @Override
-    public Livre ajouter(Livre livre) {
+    public Livre enregistrerNouveauLivre(Livre livre) {
         LivreEntity livreEntity = livreEntityMapper.livreToEntity(livre);
         LivreEntity savedLivreEntity = livreRepository.save(livreEntity);
         return livreEntityMapper.entityToLivre(savedLivreEntity);
     }
 
     @Override
-    public Livre modifier(Livre livre) {
+    public Livre mettreAJourLivre(Livre livre) {
         LivreEntity livreEntity = livreEntityMapper.livreToEntity(livre);
         LivreEntity savedLivreEntity = livreRepository.save(livreEntity);
         return livreEntityMapper.entityToLivre(savedLivreEntity);
     }
 
     @Override
-    public void supprimer(int id) {
+    public void supprimerLivreParId(int id) {
         livreRepository.deleteById(id);
     }
 
     @Override
-    public boolean existe(int id) {
+    public boolean existeLivreParId(int id) {
         return livreRepository.existsById(id);
     }
 }
