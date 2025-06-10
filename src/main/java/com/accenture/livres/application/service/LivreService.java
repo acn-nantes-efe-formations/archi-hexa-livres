@@ -25,9 +25,14 @@ public class LivreService implements LivreUseCase {
 
     @Override
     public Livre consulterLivre(int id){
-        return livrePort
+        Livre livre = livrePort
                 .recupererLivreParId(id)
                 .orElseThrow(() -> new LivreIntrouvableException("Livre introuvable avec l'id " + id));
+        if (livre.getDateCreation() == null) {
+            throw new LivreException("La date de creation du livre est null");
+        }
+
+        return livre;
     }
 
     @Override

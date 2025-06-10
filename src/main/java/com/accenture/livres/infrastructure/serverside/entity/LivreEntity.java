@@ -4,9 +4,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -20,6 +23,9 @@ public class LivreEntity {
     private String auteur;
     private String isbn;
     private LocalDate dateParution;
+
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
 
     public LivreEntity() {
     }
@@ -38,6 +44,19 @@ public class LivreEntity {
         this.isbn = isbn;
         this.dateParution = dateParution;
     }
+
+    @PrePersist
+    public void prePersist() {
+        if (this.createdDate == null) {
+            this.createdDate = LocalDateTime.now();
+        }
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedDate = LocalDateTime.now();
+    }
+
 
     public int getId() {
         return id;
@@ -77,5 +96,21 @@ public class LivreEntity {
 
     public void setDateParution(LocalDate dateParution) {
         this.dateParution = dateParution;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(LocalDateTime updatedDate) {
+        this.updatedDate = updatedDate;
     }
 }
