@@ -1,5 +1,6 @@
 package com.accenture.livres.application.service;
 
+import com.accenture.livres.application.annotation.TransactionMethod;
 import com.accenture.livres.application.domain.Livre;
 import com.accenture.livres.application.exception.LivreException;
 import com.accenture.livres.application.exception.LivreIntrouvableException;
@@ -36,12 +37,14 @@ public class LivreService implements LivreUseCase {
     }
 
     @Override
+    @TransactionMethod
     public Livre ajouterLivre(Livre livre){
         verifierLivre(livre);
         return livrePort.enregistrerNouveauLivre(livre);
     }
 
     @Override
+    @TransactionMethod
     public Livre modifierLivre(int id, Livre livre){
         Livre livreEnBase = consulterLivre(id);
         modifier(livre, livreEnBase);
@@ -50,6 +53,7 @@ public class LivreService implements LivreUseCase {
     }
 
     @Override
+    @TransactionMethod
     public void supprimerLivre(int id){
         boolean trouve = livrePort.existeLivreParId(id);
         if (!trouve) {
